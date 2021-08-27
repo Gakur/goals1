@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Goal } from '../goals';
-
+import { ActivatedRoute, ParamMap } from '@angular/router';
+import { GoalService } from '../goal-service/goal.service';
 @Component({
   selector: 'app-goal-detail',
   templateUrl: './goal-detail.component.html',
@@ -8,19 +9,24 @@ import { Goal } from '../goals';
 })
 export class GoalDetailComponent implements OnInit {
 
-  @Input() goal!: Goal;
-  @Output() isComplete = new EventEmitter<boolean>();
+  // @Input() goal!: Goal;
+  // @Output() isComplete = new EventEmitter<boolean>();
+  // @Input() goal!: Goal;
+  // @Output() isComplete = new EventEmitter<boolean>();
+  goals!: Goal;
 
-  goalComplete(complete:boolean){
-    this.isComplete.emit(complete);
-  }
-    goalDelete(complete:boolean){
-    this.isComplete.emit(complete);
-  }
+  // goalComplete(complete:boolean){
+  //   this.isComplete.emit(complete);
+  // }
+  //   goalDelete(complete:boolean){
+  //   this.isComplete.emit(complete);
+  // }
 
-  constructor() { }
+  constructor(private route:ActivatedRoute, private service:GoalService) { }
 
   ngOnInit() {
+    let id = this.route.snapshot.paramMap.get('id');
+    this.goals = this.service.getGoal(id)
   }
 
 }
